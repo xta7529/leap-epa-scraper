@@ -31,7 +31,28 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Basic Usage
+### Command Line Interface
+
+The easiest way to use the scraper is via the command line:
+
+```bash
+# Scrape a license profile
+python cli.py P1010-01
+
+# Scrape with custom output
+python cli.py P1010-01 --download-dir my_pdfs --output my_results.csv
+
+# Download and parse a specific document directly
+python cli.py --url https://leap.epa.ie/docs/c40fdc96-aab7-4e98-b68d-7e67223b422e.pdf
+
+# Search for custom phrases
+python cli.py P1010-01 --phrases "receiving waters" "ELV breach" "discharge"
+
+# Enable verbose output
+python cli.py P1010-01 --verbose
+```
+
+### Python API - Basic Usage
 
 ```python
 from scraper import EPALeapScraper
@@ -48,7 +69,7 @@ scraper.scrape_license(
 )
 ```
 
-### Advanced Usage
+### Python API - Advanced Usage
 
 ```python
 from scraper import EPALeapScraper
@@ -72,9 +93,15 @@ results = scraper.parse_pdf_for_phrases("output.pdf", phrases)
 scraper.save_results_to_csv(results, "output.csv")
 ```
 
-### Running Examples
+### Running Tests
 
-Run the example script to test the scraper:
+Run the unit tests to verify the installation:
+
+```bash
+python test_scraper.py
+```
+
+Run the example script to see live demonstrations:
 
 ```bash
 python example.py
@@ -90,10 +117,13 @@ This will:
 
 ```
 leap-epa-scraper/
+├── cli.py              # Command-line interface
 ├── scraper.py          # Main scraper class and logic
 ├── example.py          # Example usage and test script
+├── test_scraper.py     # Unit tests
 ├── requirements.txt    # Python dependencies
-└── README.md          # This file
+├── README.md           # This file
+└── IMPLEMENTATION.md   # Technical implementation details
 ```
 
 ## Output
