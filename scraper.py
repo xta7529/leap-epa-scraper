@@ -155,6 +155,9 @@ class EPALeapScraper:
         logger.info(f"Parsing PDF: {pdf_path}")
         results = {phrase: [] for phrase in phrases}
         
+        # Compile regex patterns once outside the loop
+        patterns = {phrase: re.compile(re.escape(phrase), re.IGNORECASE) for phrase in phrases}
+        
         try:
             reader = PdfReader(pdf_path)
             
@@ -168,7 +171,7 @@ class EPALeapScraper:
                 lines = text.split('\n')
                 
                 for phrase in phrases:
-                    pattern = re.compile(re.escape(phrase), re.IGNORECASE)
+                    pattern = patterns[phrase]
                     
                     for i, line in enumerate(lines):
                         if pattern.search(line):
